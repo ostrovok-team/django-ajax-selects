@@ -245,12 +245,14 @@ class AutoCompleteSelectMultipleField(forms.fields.CharField):
         # it should just let the widget do the rendering
         # so by default do not show it in widget
         # if using in a normal form then set to True when creating the field
+        additional_args = kwargs.pop('widget_kwargs', {})
         widget_kwargs = {
             'channel': channel,
             'help_text': help_text,
             'show_help_text': show_help_text,
-            'plugin_options': kwargs.pop('plugin_options',{})
+            'plugin_options': kwargs.pop('plugin_options', {})
         }
+        widget_kwargs.update(additional_args)
         kwargs['widget'] = AutoCompleteSelectMultipleWidget(**widget_kwargs)
         kwargs['help_text'] = help_text
 
